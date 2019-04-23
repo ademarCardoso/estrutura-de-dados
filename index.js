@@ -1,17 +1,18 @@
 const readline = require('readline-sync') // Sera trocado por input trazido do front end
 
-const miners = {
-    text: require('./miners/textminer.js'),
-    complexity: require('./miners/complexityminer.js'),
-    image: require('./miners/imageminer.js')
-}
+// const miners = {
+//     text: require('./miners/textminer.js'),
+//     complexity: require('./miners/complexityminer.js'),
+//     image: require('./miners/imageminer.js')
+// }
 
 async function start () {
 
     const content = {}
 
     //Adicionando o termo de busca
-    chamei(askAndReturnSerchTerm()) 
+    content.serchTerm = askAndReturnSerchTerm()
+    content.languageOfserch = asklanguageOfSerch() 
 
     /* Chamada dos mineradores
      * No momento os mineradores de texto e complexidade estao buscando em 'pt'
@@ -19,11 +20,11 @@ async function start () {
      * lembrando que as funcoes ja esperam outras linguas de busca
     */
 
-    await miners.text(content)
-    await miners.complexity(content)
-    await miners.image(content)
+    // await miners.text(content)
+    // await miners.complexity(content)
+    // await miners.image(content)
     
-    /* Esta funcao e so para desenvolvimento do backend, mais tarde devera
+    /* Estas funcoes sao para desenvolvimento do backend, mais tarde devera
      * ser subtituida por input do usario vindo do front end
     */
     function askAndReturnSerchTerm () {
@@ -31,7 +32,15 @@ async function start () {
         
         return content
     }
-    console,log(content)
+
+    function asklanguageOfSerch() {
+        const languages = ['pt', 'en']
+        const selectedLanguageIndex = readline.keyInSelect( languages, "Escolha uma linhua de busca: ")
+        const selectedLanguageText = languages[selectedLanguageIndex]
+
+        return selectedLanguageText
+    }
+    console.log(content)
 }
 
 start()
