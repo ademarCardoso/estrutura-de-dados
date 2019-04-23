@@ -1,29 +1,31 @@
 const algorithmia = require('algorithmia')
 const algorithmiaApiKey = require('../credentials/apikey.json').apiKey
-const sentenceBoundaryDetection = require('sbd ')
+// const sentenceBoundaryDetection = require('sbd ')
 
-async function scrapTextFromWikipedia(serchTerm) {
+async function scrapTextFromWikipedia(content) {
 
-    await fetchContentFromWikipidia(serchTerm)
-    sanitizeContent(serchTerm)
-    breakContentIntoSentences(serchTerm)
+    //console.log("Recebi os termos de busca: " + content.serchTerm + " E a lingua " + content.languageOfserch)
 
-    async function fetchContentFromWikipidia(serchTerm) {
+    await fetchContentFromWikipidia(content)
+    sanitizeContent(content)
+    // breakContentIntoSentences(content)
+
+    async function fetchContentFromWikipidia(content) {
 
         const algorithmiaAuthenticated = algorithmia(algorithmiaApiKey)
         const wikipediaAlgorithm = algorithmiaAuthenticated.algo('web/WikipediaParser/0.1.2')
-        const wikipediaResponse = await wikipediaAlgorithm.pipe(serchTerm)
+        const wikipediaResponse = await wikipediaAlgorithm.pipe(content.serchTerm)
         const wikipediaContent = wikipediaResponse.get()
 
-        serchTerm.sourceContentOriginal = wikipediaContent.serchTerm
+        content.sourceContentOriginal = wikipediaContent.content
 
     }
 
-    function sanitizeContent(serchTerm) {
-        const withoutBlankLinesAndMarkdown = removeBlankLinesAndMarkdown(serchTerm.sourceContentOriginal)
+    function sanitizeContent(content) {
+        const withoutBlankLinesAndMarkdown = removeBlankLinesAndMarkdown(content.sourceContentOriginal)
         const whithoutDatesInParentheses = removeDatesInParentheses(withoutBlankLinesAndMarkdown)
 
-        serchTerm.sourceContentSanitized = whithoutDatesInParentheses
+        content.sourceContentSanitized = whithoutDatesInParentheses
 
         function removeBlankLinesAndMarkdown(text) {
             const allLines = text.split('\n')
@@ -37,6 +39,10 @@ async function scrapTextFromWikipedia(serchTerm) {
             return withoutBlankLinesAndMarkdown.join(' ')
         }
     }
+
+    function removeDatesInParentheses(text) {
+        return text.replace(/\((?:\([^()]*\)|[^()])*\)/gm, '').replace(/  /g, ' ')
+    }
 }
 
-module.exports = console.log("Minerador, Buscando Texto")
+module.exports = scrapTextFromWikipedia

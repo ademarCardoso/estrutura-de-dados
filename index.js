@@ -1,10 +1,10 @@
 const readline = require('readline-sync') // Sera trocado por input trazido do front end
 
-// const miners = {
-//     text: require('./miners/textminer.js'),
+const miners = {
+    text: require('./miners/textminer.js'),
 //     complexity: require('./miners/complexityminer.js'),
 //     image: require('./miners/imageminer.js')
-// }
+}
 
 async function start () {
 
@@ -20,7 +20,7 @@ async function start () {
      * lembrando que as funcoes ja esperam outras linguas de busca
     */
 
-    // await miners.text(content)
+    await miners.text(content)
     // await miners.complexity(content)
     // await miners.image(content)
     
