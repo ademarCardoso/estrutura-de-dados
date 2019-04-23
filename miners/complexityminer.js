@@ -1,8 +1,8 @@
  const request = require('request')
  const cheerio = require('cheerio')
 
- async function serchComplexityOnWiki (languageOfRequest = 'pt', serchTerm) {
- request(`https://${languageOfRequest}.wikipedia.org/wiki/${serchTerm}`, function (err, res, body){ // Passar parametro de busca
+ async function serchComplexityOnWiki (content) {
+ request(`https://${content.languageOfserch}.wikipedia.org/wiki/${content.serchTerm}`, async function (err, res, body){
     if (err) {
         console.log('Erro: ' + err)
     }
@@ -10,20 +10,25 @@
     const $ = await cheerio.load(body)
 
     $('.mw-body').each(function () {
-        var complexidade = $(this).find('.infobox_v2 td').text().trim()
+        const complexidade = $(this).find('.infobox_v2 td').text().trim()
 
-        complexidade = sanitizador(complexidade)
+        //complexidade = sanitizador(complexidade)
 
         console.log('Complexidade: ' + complexidade)
+
+        //Erro para adicionar a complexidade no content
+        content.textComplexity = complexidade
+        return content
+        
     })
     
 })
 
 //Preparar sanitizador do response 
-function responseSanitizer (termOfResponse) {
+// function responseSanitizer (termOfResponse) {
+
+// }
 
 }
 
-}
-
-module.exports = console.log("Minerador, Buscando Complexidade")//termOfResponse
+module.exports = serchComplexityOnWiki
