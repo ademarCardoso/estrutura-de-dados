@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "algorithmia": "^0.3.10",
+    "bing-image-scraper": "0.0.1",
     "sbd": "^1.0.15"
   }
 }

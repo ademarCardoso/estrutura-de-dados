@@ -3,8 +3,8 @@ const readline = require('readline-sync') // Sera trocado por input trazido do f
 const miners = {
     text: require('./miners/textminer.js'),
     //savecontent: require('./miners/savecontent.js'),
-    complexity: require('./miners/complexityminer.js')
-    //image: require('./miners/imageminer.js')
+    complexity: require('./miners/complexityminer.js'),
+    image: require('./miners/imageminer.js')
 }
 
 async function start () {
@@ -15,10 +15,10 @@ async function start () {
     content.serchTerm = askAndReturnSerchTerm()
     content.languageOfserch = asklanguageOfSerch() 
 
-    await miners.text(content)
+    //await miners.text(content)
     //await savecontent.save(content)
     await miners.complexity(content)
-    // await miners.image(content)
+    await miners.image(content)
     
     /* Estas funcoes sao para desenvolvimento do backend, mais tarde devera
      * ser subtituida por input do usario vindo do front end
