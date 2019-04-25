@@ -2,7 +2,6 @@ const ImageScraper = require('bing-image-scraper');
 const bing = new ImageScraper();
 
 async function imageFindUrl (content) {
-    // Esse cacete retorna uma promisse
     await bing.list({
         keyword: content.serchTerm,
         num: 2
