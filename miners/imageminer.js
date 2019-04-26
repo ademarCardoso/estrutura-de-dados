@@ -1,19 +1,18 @@
 const ImageScraper = require('bing-image-scraper');
-const bingImages = new ImageScraper();
+const bing = new ImageScraper();
 
-async function imageFinder (content) {
-    // Esta funcao retorna uma promisse
-    await bingImages.list({
+async function imageFindUrl (content) {
+    await bing.list({
         keyword: content.serchTerm,
         num: 2
     }).then(function (res) {
-        // a resposta que o bing trara sera um array de objetos, contendo a url e informacoes da imagem
-        console.log("Trazendo a imagem: " + res[1])
+        // res is the result array
+        console.log("Trazendo a imagem: " + res[0], res[1])
         
     }).catch(function (err) {
         console.log('Imagem nao encontrada ' + err)
-        
+        // err is the Error that maybe thrown here
     });
 }
 
-module.exports = imageFinder
+module.exports = imageFindUrl
