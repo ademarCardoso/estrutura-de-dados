@@ -14,20 +14,20 @@
 
         //complexidade = sanitizador(complexidade)
 
-        console.log('Complexidade: ' + complexidade)
-
         //Erro para adicionar a complexidade no content
+        
         content.textComplexity = complexidade
-        return content
+        responseSanitizer(content) 
+        console.log('Complexidade: ' + complexidade)
         
     })
     
 })
 
 //Preparar sanitizador do response 
-// function responseSanitizer (termOfResponse) {
-
-// }
+ function responseSanitizer (content) {
+    content.textComplexity.replace('\n', ' ')
+}
 
 }
 
